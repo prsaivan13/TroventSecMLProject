@@ -24,7 +24,9 @@ def linear_svc_classifier(json_data):
 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.05, random_state=0)
 
-    lsvcc = LinearSVC(C=0.01, tol=1e-5, max_iter=2500)
+    lsvcc = LinearSVC(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=2500,
+     multi_class='ovr', penalty='l2', random_state=0, tol=1e-05, verbose=0)
 
     lsvcc.fit(x_train, y_train)
 
@@ -46,9 +48,9 @@ def sgd_classifier(json_data):
 
     sgdc = SGDClassifier(alpha=0.0001, average=False, class_weight=None,
            early_stopping=False, epsilon=0.1, eta0=0.0, fit_intercept=True,
-           l1_ratio=0.15, learning_rate='optimal', loss='hinge', max_iter=2500,
-           n_iter_no_change=5, n_jobs=None, penalty='l2', power_t=0.5,
-           random_state=None, shuffle=True, tol=0.001,
+           l1_ratio=0.5, learning_rate='optimal', loss='log', max_iter=2500,
+           n_iter_no_change=5, penalty='l2', power_t=0.9,
+           random_state=None, shuffle=False, tol=0.00001,
            validation_fraction=0.1, verbose=0, warm_start=False)
 
     sgdc.fit(x_train, y_train)
@@ -80,7 +82,9 @@ def svm_classifier(json_data):
 
 
 def lasso(json_data):
-    reg = linear_model.Lasso(alpha=0.1)
+    reg = linear_model.Lasso(alpha=0.1, copy_X=True, fit_intercept=True, max_iter=1000,
+   normalize=False, positive=False, precompute=False, random_state=None,
+   selection='cyclic', tol=0.0001, warm_start=False)
     df = pd.DataFrame(data=json_data)
 
     x = df.drop('type', axis=1)
