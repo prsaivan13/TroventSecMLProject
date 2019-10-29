@@ -1,4 +1,4 @@
-# helpers.py plots confusion matrix for every classifier using matplotlib
+# helpers.py plots confusion matrix for every classifier (using numpy and matplotlib)
 
 import numpy as np
 
@@ -8,15 +8,9 @@ from sklearn.metrics import confusion_matrix
 
 
 def plot_confusion_matrix(y_true, y_pred, classes,
-                          normalize=False,  # "True" normalizes confusion matrix, "False" plots it without normalization
+                          normalize=True,  # "True" normalizes confusion matrix, "False" plots it without normalization
                           title=None,
                           cmap=plt.cm.Blues):
-
-    if not title:
-        if normalize:
-            title = 'Normalized confusion matrix'
-        else:
-            title = 'Confusion matrix (without normalization)'
 
 
     cm = confusion_matrix(y_true, y_pred)
