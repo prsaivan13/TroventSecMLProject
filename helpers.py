@@ -11,8 +11,6 @@ def plot_confusion_matrix(y_true, y_pred, classes,
                           normalize=True,  # "True" normalizes confusion matrix, "False" plots it without normalization
                           title=None,
                           cmap=plt.cm.Blues):
-
-
     cm = confusion_matrix(y_true, y_pred)
 
     if normalize:

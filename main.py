@@ -2,8 +2,8 @@ import json
 
 import matplotlib.pyplot as plt
 
-
-from classifiers import gaussian_naive_bayes, decision_tree_classifier, sgd_classifier, linear_svc_classifier, svm_classifier, k_nearest_neighbors
+from classifiers import gaussian_naive_bayes, decision_tree_classifier, sgd_classifier, linear_svc_classifier, \
+    svm_classifier, k_nearest_neighbors
 
 if __name__ == "__main__":
     with open('data/sampledata.json') as data:
