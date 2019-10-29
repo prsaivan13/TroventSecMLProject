@@ -6,13 +6,34 @@ from sklearn.metrics import classification_report
 from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import SGDClassifier
-from sklearn import linear_model
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+
 
 
 from helpers import plot_confusion_matrix
+
+def gaussian_naive_bayes(json_data):
+
+    df = pd.DataFrame(data=json_data)
+
+    x = df.drop('type', axis=1)
+    y = df['type']
+
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.05, random_state=0)
+
+    gaussian_naive_bayes = GaussianNB()
+
+    gaussian_naive_bayes.fit(x_train, y_train)
+    GaussianNB(priors=None, var_smoothing=1e-09)
+
+    y_pred = gaussian_naive_bayes.predict(x_test)
+
+    print('Gaussian Naive Bayes Classifier:')
+    print(classification_report(y_test, y_pred))
+    plot_confusion_matrix(y_true=y_test, y_pred=y_pred, classes=y.unique(), title='Gaussian Naive Bayes classifier')
 
 
 def linear_svc_classifier(json_data):
@@ -57,7 +78,7 @@ def sgd_classifier(json_data):
 
     y_pred = sgdc.predict(x_test)
 
-    print('SGD Classifier')
+    print('SGD Classifier:')
     print(classification_report(y_test, y_pred))
     plot_confusion_matrix(y_true=y_test, y_pred=y_pred, classes=y.unique(), title='SGD Classifier')
 
@@ -77,26 +98,6 @@ def svm_classifier(json_data):
     y_pred = sv_class.predict(x_test)
 
     print('SVM classifier:')
-    print(classification_report(y_test, y_pred))
-    plot_confusion_matrix(y_true=y_test, y_pred=y_pred, classes=y.unique(), title='SVM classifier')
-
-
-def lasso(json_data):
-    reg = linear_model.Lasso(alpha=0.1, copy_X=True, fit_intercept=True, max_iter=1000,
-   normalize=False, positive=False, precompute=False, random_state=None,
-   selection='cyclic', tol=0.0001, warm_start=False)
-    df = pd.DataFrame(data=json_data)
-
-    x = df.drop('type', axis=1)
-    y = df['type']
-
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.05, random_state=0)
-
-    reg.fit(x_train, y_train)
-
-    y_pred = reg.predict(x_test)
-
-    print('Lasso classifier:')
     print(classification_report(y_test, y_pred))
     plot_confusion_matrix(y_true=y_test, y_pred=y_pred, classes=y.unique(), title='SVM classifier')
 
